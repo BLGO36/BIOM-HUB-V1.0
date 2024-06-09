@@ -1,0 +1,146 @@
+local ScreenGui = Instance.new("ScreenGui")
+local Frame = Instance.new("Frame")
+local ScrollingFrame = Instance.new("ScrollingFrame")
+local UIListLayout = Instance.new("UIListLayout")
+local TextButton = Instance.new("TextButton")
+local TextLabel = Instance.new("TextLabel")
+local TextButton_2 = Instance.new("TextButton")
+
+ScreenGui.Parent = game:GetService("CoreGui")
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+ScreenGui.ResetOnSpawn = false
+
+Frame.Parent = ScreenGui
+Frame.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+Frame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Frame.BorderSizePixel = 0
+Frame.Position = UDim2.new(0.0198675506, 0, 0.226415098, 0)
+Frame.Size = UDim2.new(0, 200, 0, 300)
+
+ScrollingFrame.Parent = Frame
+ScrollingFrame.Active = true
+ScrollingFrame.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+ScrollingFrame.BorderColor3 = Color3.fromRGB(34, 34, 34)
+ScrollingFrame.BorderSizePixel = 0
+ScrollingFrame.Position = UDim2.new(0, 0, 0.100000098, 0)
+ScrollingFrame.Size = UDim2.new(0, 200, 0, 245)
+ScrollingFrame.ScrollBarImageColor3 = Color3.fromRGB(34, 34, 34)
+
+UIListLayout.Parent = ScrollingFrame
+UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+
+TextButton.Parent = ScrollingFrame
+TextButton.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+TextButton.BorderColor3 = Color3.fromRGB(34, 34, 34)
+TextButton.Size = UDim2.new(0, 155, 0, 39)
+TextButton.Visible = false
+TextButton.Font = Enum.Font.SourceSans
+TextButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+TextButton.TextSize = 20.000
+TextButton.TextWrapped = true
+TextButton.TextScaled = true
+
+TextLabel.Name = "Label"
+TextLabel.Parent = Frame
+TextLabel.BackgroundColor3 = Color3.fromRGB(34, 34, 34)
+TextLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
+TextLabel.BorderSizePixel = 0
+TextLabel.Size = UDim2.new(0, 200, 0, 30)
+TextLabel.Font = Enum.Font.SourceSansBold
+TextLabel.Text = "아이템가져오기 -BIOM HUB"
+TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel.TextScaled = true
+TextLabel.TextSize = 14.000
+TextLabel.TextStrokeColor3 = Color3.fromRGB(34, 34, 34)
+TextLabel.TextWrapped = true
+
+TextButton_2.Parent = Frame
+TextButton_2.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+TextButton_2.BorderColor3 = Color3.fromRGB(25, 25, 25)
+TextButton_2.BorderSizePixel = 0
+TextButton_2.Position = UDim2.new(0, 0, 0.916666687, 0)
+TextButton_2.Size = UDim2.new(0, 200, 0, 24)
+TextButton_2.Font = Enum.Font.SourceSans
+TextButton_2.Text = "아이템 목록 새로고침"
+TextButton_2.TextColor3 = Color3.fromRGB(255, 255, 255)
+TextButton_2.TextScaled = true
+TextButton_2.TextSize = 14.000
+TextButton_2.TextStrokeColor3 = Color3.fromRGB(25, 25, 25)
+TextButton_2.TextWrapped = true
+
+local function BIOM_SCRIPT_HUB() -- Frame.LocalScript 
+	local script = Instance.new('LocalScript', Frame)
+
+	local button = script.Parent.ScrollingFrame.TextButton
+	button.Parent = nil
+	button.Name = "slaves"
+	local function updatelist()
+		for i, v in script.Parent.ScrollingFrame:GetDescendants() do
+			if v:IsA("TextButton") then
+				v:Destroy()
+			end
+		end
+
+		local function cloneToBackpack(toolName)
+			local clonedTool = toolName:Clone()
+			clonedTool.Parent = game:GetService("Players").LocalPlayer:WaitForChild("Backpack")
+		end
+		for i, v in pairs(game:GetDescendants()) do
+			if v:IsA("Tool") and v.Parent.Parent ~= game:GetService("Players").LocalPlayer then
+				local clonebutton = button:Clone()
+				clonebutton.Parent = script.Parent.ScrollingFrame
+				clonebutton.Visible = true
+				clonebutton.Text = v.Name
+				clonebutton.MouseButton1Click:Connect(function()
+					cloneToBackpack(v)
+				end)
+			end
+		end
+	end
+	script.Parent.TextButton.MouseButton1Click:Connect(updatelist)
+end
+coroutine.wrap(BIOM_SCRIPT_HUB)()
+
+
+local function BIOM_HUB() -- Frame.DragScript 
+	local script = Instance.new('LocalScript', Frame)
+
+	local UIS = game:GetService('UserInputService')
+	local frame = script.Parent
+	local dragToggle = nil
+	local dragSpeed = 0
+	local dragStart = nil
+	local startPos = nil
+
+	local function updateInput(input)
+		local delta = input.Position - dragStart
+		local position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X,
+			startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+		game:GetService('TweenService'):Create(frame, TweenInfo.new(dragSpeed), {
+			Position = position
+		}):Play()
+	end
+
+	frame.InputBegan:Connect(function(input)
+		if (input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch) then 
+			dragToggle = true
+			dragStart = input.Position
+			startPos = frame.Position
+			input.Changed:Connect(function()
+				if input.UserInputState == Enum.UserInputState.End then
+					dragToggle = false
+				end
+			end)
+		end
+	end)
+
+	UIS.InputChanged:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+			if dragToggle then
+				updateInput(input)
+			end
+		end
+	end)
+
+end
+coroutine.wrap(BIOM_HUB)()
