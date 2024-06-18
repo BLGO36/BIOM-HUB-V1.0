@@ -1,0 +1,8 @@
+local player = game.Players.LocalPlayer
+-- 체크포인트 삭제 함수
+local function clearCheckpoint()
+    player:SetAttribute("Checkpoint", nil)
+    print("체크포인트를 삭제하였습니다.. -BIOM SCRIPT HUB")
+end
+-- clearCheckpoint 함수 호출 예시
+clearCheckpoint()
