@@ -1,0 +1,38 @@
+-- 플레이어를 찾습니다
+local player = game.Players.LocalPlayer
+-- 현재 캐릭터를 가져옵니다
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+-- 체크포인트를 설정하는 함수
+local function setCheckpoint()
+    -- 플레이어의 현재 위치를 체크포인트로 설정합니다
+    player:SetAttribute("Checkpoint", humanoidRootPart.Position)
+    print("체크포인트를 생성하였습니다. -BIOM SCRIPT HUB")
+end
+-- 체크포인트 설정
+setCheckpoint()
+-- 플레이어가 죽었을 때 체크포인트에서 리스폰하도록 설정
+player.CharacterAdded:Connect(function(character)
+    local checkpoint = player:GetAttribute("Checkpoint")
+    if checkpoint then
+        -- 리스폰 후 체크포인트로 이동
+        local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+        humanoidRootPart.CFrame = CFrame.new(checkpoint)
+    end
+    character:WaitForChild("Humanoid").Died:Connect(function()
+        local checkpoint = player:GetAttribute("Checkpoint")
+        if checkpoint then
+            -- 5초 후에 리스폰
+            wait(5)
+            player:LoadCharacter() -- 캐릭터를 다시 로드 (리스폰)
+
+            -- 리스폰 후 체크포인트로 이동
+            player.CharacterAdded:Wait() -- 새 캐릭터가 추가될 때까지 기다립니다
+            character = player.Character
+            if character then
+                local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+                humanoidRootPart.CFrame = CFrame.new(checkpoint)
+            end
+        end
+    end)
+end)
