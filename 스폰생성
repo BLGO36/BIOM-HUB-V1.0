@@ -7,7 +7,7 @@ local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
 local function setCheckpoint()
     -- 플레이어의 현재 위치를 체크포인트로 설정합니다
     player:SetAttribute("Checkpoint", humanoidRootPart.Position)
-    print("체크포인트를 생성하였습니다. -BIOM SCRIPT HUB")
+    print("스폰을 생성했습니다.. -BIOM SCRIPT HUB")
 end
 -- 체크포인트 설정
 setCheckpoint()
