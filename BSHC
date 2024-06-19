@@ -5,9 +5,6 @@ local Te = Instance.new("TextButton")
 BSHC.Name = "BSHC"
 BSHC.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 BSHC.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-BSHC.Draggable = true
-BSHC.Selectable = true
-BSHC.Active = true
 
 Fr.Name = "Fr"
 Fr.Parent = BSHC
