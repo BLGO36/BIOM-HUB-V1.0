@@ -1,0 +1,45 @@
+local BSHC = Instance.new("ScreenGui")
+local Fr = Instance.new("Frame")
+local Te = Instance.new("TextButton")
+
+BSHC.Name = "BSHC"
+BSHC.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+BSHC.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+BSHC.Draggable = true
+BSHC.Selectable = true
+BSHC.Active = true
+
+Fr.Name = "Fr"
+Fr.Parent = BSHC
+Fr.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+Fr.BorderColor3 = Color3.fromRGB(34, 34, 34)
+Fr.BorderSizePixel = 0
+Fr.Position = UDim2.new(0, 0, 0.352201253, 0)
+Fr.Size = UDim2.new(0, 50, 0, 50)
+Fr.Draggable = true
+Fr.Selectable = true
+Fr.Active = true
+
+Te.Name = "Te"
+Te.Parent = Fr
+Te.BackgroundColor3 = Color3.fromRGB(34, 34, 34)
+Te.BorderColor3 = Color3.fromRGB(25, 25, 25)
+Te.BorderSizePixel = 0
+Te.Position = UDim2.new(0.100000001, 0, 0.100000001, 0)
+Te.Size = UDim2.new(0, 40, 0, 40)
+Te.Font = Enum.Font.SourceSansBold
+Te.Text = "ￇ￣ﾺ￪ ﾴ￝ﾱ￢"
+Te.TextColor3 = Color3.fromRGB(255, 255, 255)
+Te.TextScaled = true
+Te.TextSize = 14.000
+Te.TextWrapped = true
+Te.Draggable = true
+Te.Selectable = true
+Te.Active = true
+
+local BSHC = game:GetService("VirtualInputManager")
+
+Te.MouseButton1Click:Connect(function()
+	BSHC:SendKeyEvent(true, Enum.KeyCode.K, false, nil)
+	BSHC:SendKeyEvent(false, Enum.KeyCode.K, false, nil)
+end)
