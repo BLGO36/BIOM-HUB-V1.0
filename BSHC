@@ -28,7 +28,7 @@ Te.BorderSizePixel = 0
 Te.Position = UDim2.new(0.100000001, 0, 0.100000001, 0)
 Te.Size = UDim2.new(0, 40, 0, 40)
 Te.Font = Enum.Font.SourceSansBold
-Te.Text = "ￇ￣ﾺ￪ ﾴ￝ﾱ￢"
+Te.Text = "허브 닫기"
 Te.TextColor3 = Color3.fromRGB(255, 255, 255)
 Te.TextScaled = true
 Te.TextSize = 14.000
@@ -40,6 +40,13 @@ Te.Active = true
 local BSHC = game:GetService("VirtualInputManager")
 
 Te.MouseButton1Click:Connect(function()
-	BSHC:SendKeyEvent(true, Enum.KeyCode.K, false, nil)
-	BSHC:SendKeyEvent(false, Enum.KeyCode.K, false, nil)
+   if Te.Text == "허브 닫기" then
+      BSHC:SendKeyEvent(true, Enum.KeyCode.K, false, nil)
+	   BSHC:SendKeyEvent(false, Enum.KeyCode.K, false, nil)
+      Te.Text = "허브 열기"
+   elseif Te.Text == "허브 열기" then
+      BSHC:SendKeyEvent(true, Enum.KeyCode.K, false, nil)
+	   BSHC:SendKeyEvent(false, Enum.KeyCode.K, false, nil)
+      Te.Text = "허브 닫기"
+   end
 end)
