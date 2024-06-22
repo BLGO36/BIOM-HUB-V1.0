@@ -1,7 +1,7 @@
 -- Pepsi Was Here
 -- Pepsi's Name Spoofer
 -- Settings
-local new_name = "BIOM SCRIPT HUB" -- I'm not Pepsi. ^_^
+local new_name = "BIOM SCRIPT" -- I'm not Pepsi. ^_^
 local new_id = 00103 -- I'm not 26346. ^_^
 local clear_avatar = true -- So no one can reverse search by your outfit
 local flush_body_colors = false -- So no one can reverse search by your bodycolors
